@@ -1,0 +1,11 @@
+{
+  "name": "csc307stocktdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "stocks.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "author": "",
+  "license": "ISC"
+}
