@@ -15,14 +15,20 @@ export class StockPortfolio {
         return Number.isInteger(number) && number > 0
     }
     _isString(string){
-        return String.isString(string)
+        return typeof string === 'string' || string instanceof String
+
     }
     _tickerInPortfolio(ticker){
         return ticker in this.shares;
     }
     purchase(ticker,amount){
         if (this._isPositiveNumber(amount) && this._isString(ticker)){
-
+            if (this._tickerInPortfolio(ticker)){
+                this.shares[ticker] += amount
+            }
+            else{
+                this.shares[ticker] = amount
+            }
         }
     }
 }

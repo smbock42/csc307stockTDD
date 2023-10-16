@@ -38,13 +38,32 @@ test('2 uniqueShares',()=>{
 
 //purchaseStock
 test('purchase 0 stocks',()=>{
-    portfolio.purchase()
+    portfolio.purchase("AMD", 0);
+    expect(portfolio.getShares()).toEqual({});
 })
 
-test('purchase -1 stocks')
+test('purchase -1 stocks',()=>{
+    portfolio.purchase("AMD",-1);
+    expect(portfolio.getShares()).toEqual({});
+})
 
-test('purchase 1 new stock not in portfolio')
+test('purchase 1 new stock not in portfolio',()=>{
+    portfolio.purchase("AMD",1);
+    expect(portfolio.getShares()).toEqual({"AMD":1});
+})
 
-test('purchase 1 stock with invalid ticker')
+test('purchase 1 stock with invalid ticker',()=>{
+    portfolio.purchase(24,4);
+    expect(portfolio.isEmpty()).toBe(true);
+})
 
-test('purchase 3 additional stocks to existing stock in portfolio')
+test('purchase 3 additional stocks to existing stock in portfolio',()=>{
+    expect(portfolio.isEmpty()).toBe(true);
+    portfolio.purchase("AMD", 3);
+    expect(portfolio.isEmpty()).toBe(false);
+    expect(portfolio.getShares()).toEqual({"AMD":3});
+    portfolio.purchase("AMD",4);
+    expect(portfolio.getShares()).toEqual({"AMD":7});
+    portfolio.purchase("HI",3);
+    expect(portfolio.getShares()).toEqual({"AMD":7,"HI":3})
+})
