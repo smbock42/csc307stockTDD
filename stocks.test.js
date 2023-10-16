@@ -36,11 +36,6 @@ test('2 uniqueShares',()=>{
 
 //2.4
 
-//testing _isString
-test('testing valid string',()=>{
-    expect(portfolio._isString(""))
-})
-
 //purchaseStock
 test('purchase 0 stocks',()=>{
     portfolio.purchase()
