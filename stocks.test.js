@@ -67,3 +67,48 @@ test('purchase 3 additional stocks to existing stock in portfolio',()=>{
     portfolio.purchase("HI",3);
     expect(portfolio.getShares()).toEqual({"AMD":7,"HI":3})
 })
+
+//2.5
+test('sell 0 stocks',()=>{
+    portfolio.purchase("AMD", 3);
+    portfolio.sell("AMD",0);
+    expect(portfolio.getShares()).toEqual({"AMD":3})
+})
+
+test('sell bad stock',()=>{
+    portfolio.purchase("AMD",3);
+    portfolio.sell(3,0);
+    expect(portfolio.getShares()).toEqual({"AMD":3})
+})
+
+test('sell -1 stocks',()=>{
+    portfolio.purchase("AMD", 3);
+    portfolio.sell("AMD",-1);
+    expect(portfolio.getShares()).toEqual({"AMD":3})
+})
+
+test('sell 1 stock that is not in portfolio',()=>{
+    portfolio.purchase("AMD", 3);
+    portfolio.sell("CBS",2);
+    expect(portfolio.getShares()).toEqual({"AMD":3})
+})
+
+test('sell more stock than a portfolio has',()=>{
+    portfolio.purchase("AMD", 3);
+    portfolio.sell("AMD",5);
+    expect(portfolio.getShares()).toEqual({"AMD":3})
+})
+
+test('sell full amount of stock that a portfolio has',()=>{
+    portfolio.purchase("AMD", 3);
+    portfolio.sell("AMD",3);
+    expect(portfolio.getShares()).toEqual({})
+})
+
+test('sell less amount of stock than full',()=>{
+    portfolio.purchase("AMD",3);
+    portfolio.sell("AMD",2);
+    expect(portfolio.getShares()).toEqual({"AMD":1})
+})
+
+// test('sell more stock than a portfolio has')

@@ -31,6 +31,20 @@ export class StockPortfolio {
             }
         }
     }
+    _getInventoryAmount(stock){
+        return this.shares[stock];
+    }
+    sell(ticker,amount){
+        if (this._isPositiveNumber(amount) && this._isString(ticker)){
+            if (amount < this._getInventoryAmount(ticker)){
+                this.shares[ticker] -= amount
+            }
+            else if (amount === this._getInventoryAmount(ticker)){
+                delete this.shares[ticker]
+            }
+        }
+
+    }
 }
 
 export default {StockPortfolio}
