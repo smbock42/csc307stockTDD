@@ -89,14 +89,15 @@ test('sell -1 stocks',()=>{
 
 test('sell 1 stock that is not in portfolio',()=>{
     portfolio.purchase("AMD", 3);
-    portfolio.sell("CBS",2);
+    expect(() => { portfolio.sell("CBS", 2) }).toThrow(/ShareSaleException/);
     expect(portfolio.getShares()).toEqual({"AMD":3})
 })
 
 test('sell more stock than a portfolio has',()=>{
     portfolio.purchase("AMD", 3);
-    portfolio.sell("AMD",5);
+    expect(() => { portfolio.sell("GME", 6) }).toThrow(/ShareSaleException/);
     expect(portfolio.getShares()).toEqual({"AMD":3})
+    expect
 })
 
 test('sell full amount of stock that a portfolio has',()=>{
@@ -108,7 +109,39 @@ test('sell full amount of stock that a portfolio has',()=>{
 test('sell less amount of stock than full',()=>{
     portfolio.purchase("AMD",3);
     portfolio.sell("AMD",2);
-    expect(portfolio.getShares()).toEqual({"AMD":1})
+    expect(portfolio.getShares()).toEqual({"AMD":1});
 })
 
-// test('sell more stock than a portfolio has')
+//2.6 
+
+test('get stockAmount of an existing stock',()=>{
+    portfolio.purchase("AMD",3);
+    expect(portfolio.stockAmount("AMD")).toBe(3);
+})
+
+test('get stockAmount of a non existing stock',()=>{
+    expect(portfolio.stockAmount("NONE")).toEqual();
+})
+
+//2.7
+
+test('no stocks to remove',()=>{
+    portfolio.removeUnownedStocks();
+    expect(portfolio.getShares()).toEqual({});
+})
+
+test('no stocks to remove pt.2',()=>{
+    portfolio.purchase("AMD", 3);
+    portfolio.removeUnownedStocks();
+
+    expect(portfolio.getShares()).toEqual({"AMD":3});
+})
+
+test('no stocks to remove pt.2',()=>{
+    portfolio.shares = {"AMD":3, "DELETE":0}
+    expect(portfolio.getShares()).toEqual({"AMD":3,"DELETE":0});
+    
+    portfolio.removeUnownedStocks();
+
+    expect(portfolio.getShares()).toEqual({"AMD":3});
+})

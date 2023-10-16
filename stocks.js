@@ -42,9 +42,34 @@ export class StockPortfolio {
             else if (amount === this._getInventoryAmount(ticker)){
                 delete this.shares[ticker]
             }
+            else {
+                throw new ShareSaleException("ShareSaleException");
+            }
         }
 
     }
+    stockAmount(ticker){
+        if (this._tickerInPortfolio(ticker)){
+            return this.shares[ticker]
+        }
+    }
+
+    removeUnownedStocks(){
+        for (const key in this.shares) {
+            if (this.shares[key] === 0) {
+              delete this.shares[key];
+            }
+          }
+    }
 }
 
+class ShareSaleException extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'ShareSaleException';
+    }
+  }
+  
+
 export default {StockPortfolio}
+
